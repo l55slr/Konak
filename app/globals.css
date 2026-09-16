@@ -1,0 +1,151 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", monospace;
+
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+
+  --radius-md: 6px;
+  --radius-lg: 8px;
+}
+
+:root {
+  --background: #ffffff;
+  --surface: #fafafa;
+  --foreground: #111111;
+  --muted-foreground: #666666;
+  --border: #eaeaea;
+  --accent: #8a5a00;
+}
+
+.dark {
+  --background: #000000;
+  --surface: #0a0a0a;
+  --foreground: #ededed;
+  --muted-foreground: #888888;
+  --border: #333333;
+  --accent: #e2b34a;
+}
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background-color: var(--accent);
+    color: var(--background);
+  }
+}
+
+/* Keyframes for dialogs, sheets and fades. Named to avoid collisions. */
+@keyframes konak-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes konak-dialog-in {
+  from { opacity: 0; transform: translate(-50%, -48%) scale(0.98); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+@keyframes konak-slide-up {
+  from { transform: translateY(16px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.anim-fade-in { animation: konak-fade-in 150ms ease-out; }
+.anim-dialog-in { animation: konak-dialog-in 150ms ease-out; }
+.anim-slide-up { animation: konak-slide-up 200ms ease-out; }
+
+/* Minimal prose styling for static pages and MDX guide bodies. */
+.prose {
+  line-height: 1.7;
+  font-size: 0.9375rem;
+}
+.prose p { margin: 1rem 0; }
+.prose h2 {
+  margin: 2.25rem 0 0.75rem;
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.prose h3 {
+  margin: 1.75rem 0 0.5rem;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.prose ul { list-style: disc; padding-left: 1.25rem; margin: 1rem 0; }
+.prose ol { list-style: decimal; padding-left: 1.25rem; margin: 1rem 0; }
+.prose li { margin: 0.4rem 0; }
+.prose a { text-decoration: underline; text-underline-offset: 3px; }
+.prose a:hover { color: var(--accent); }
+.prose strong { font-weight: 600; }
+.prose blockquote {
+  border-left: 2px solid var(--border);
+  padding-left: 1rem;
+  color: var(--muted-foreground);
+  margin: 1rem 0;
+}
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+.prose pre code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  font-size: 1em;
+}
+.prose table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+.prose th, .prose td {
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  font-size: 0.875rem;
+}
+
+@media print {
+  header,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #ffffff;
+    color: #000000;
+  }
+  a {
+    color: #000000;
+    text-decoration: none;
+  }
+}
